@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-//need to use uppercase Person, because jsx, lower case eleemnts are HTML
-//uppercase elements are custom HTML elements (components)
 import Person from './Person/Person';
 
 
@@ -10,45 +8,83 @@ class App extends Component {
   //if state changes, will re-render DOM
   state = {
     persons: [
-      {name: "Max", age: 28},
-      {name: "Manu", age: 29},
-      {name: "Stephanie", age:26}
+      {id:"1",name: "Max", age: 28},
+      {id:"2",name: "Manu", age: 29},
+      {id:"3",name: "Stephanie", age:26}
     ],
-    otherState: "some other value"
+    otherState: "some other value",
+    showPersons: true
   };
 
-  //event handler. Use ES6 for correct ES6 scope
-  switchNameHandler = (newName) =>{
-    //DONT't change state directly. Use methid
-    //this.state.persons[0].name="Maximuliam"
-    this.setState({
-      persons: [
-      {name: newName, age: 28},
-      {name: "Manu", age: 29},
-      {name: "Stephanie", age:27}
-       ]
-    });
-  };
+  //should always edit state in an immutable fashion. Change via methods
+  deletePersonHandler = (personIndex) => {
+    const persons=[...this.state.persons]; //call slice() to copy or ... avoid editing state
+    persons.splice(personIndex,1);
+    this.setState({persons:persons});
+  }
 
-  nameChangedHandler = (event) =>{
-    this.setState({
-      persons: [
-      {name: "Max", age: 28},
-      {name: event.target.value, age: 29},
-      {name: "Stephanie", age:27}
-       ]
-    });
+  nameChangedHandler = (event, id) =>{
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id===id;
+    });//find person by id
+    
+    const person={...this.state.persons[personIndex]};//spread to copy obj
+    person.name=event.target.value;
+    const persons=[...this.state.persons];
+    persons[personIndex]=person;
+    this.setState({persons:persons}); 
+  }
+
+  togglePersonHandler = () => {
+    this.setState({showPersons:!this.state.showPersons});
   }
   
   
   render() {
     const style = {
-      backgroundColor: "white",
+      backgroundColor: "green",
+      color: "white",
       font: "inherit",
-      border: "1px solid blue",
+      border: "1px solid black",
       padding: "8px",
-      cursor: "pointer"
+      cursor: "pointer",
+      ':hover': {
+        backgroundColor:'lightgreen',
+        color:"black"}
     };
+
+    let persons = null;
+
+    //expects key property if rendered through list
+    if (this.state.showPersons) {
+
+      style.backgroundColor="red";
+      style[":hover"]={
+        backgroundColor:'salmon',
+        color:'black'
+      }
+
+      persons = (
+        <div>
+          {this.state.persons.map((person,index) =>{
+            return (<Person
+              click={() => this.deletePersonHandler(index)}
+              name={person.name}
+              age={person.age}
+              key={person.id}
+              changed={(event) => this.nameChangedHandler(event,person.id)}/>)
+          })}
+        </div> 
+      );
+    }
+
+    const classes = [];
+    if(this.state.persons.length <=2){
+      classes.push("red"); //red
+    }
+    if(this.state.persons.length<=1){
+      classes.push("bold");//red and bold
+    }
 
     return (
       //looks like HTML, but actually jsx
@@ -56,24 +92,14 @@ class App extends Component {
       //jsx works in .js and jsx files. Convention to use .js
      //jsx restriction: className instead of class for css. class is reserved work in js
      //jsx must have 1 root element (in JSX 16, may return adjacent elements)
-     <div className="App">
+    <div className="App">
         <h1>Hi, I'm a React App!</h1>
-        <p>This is really working!</p>
+        <p className={classes.join(" ")}>This is really working!</p>
         {/*normal js is onclick, jsx is onClick. Don't add () for handlers*/}
         <button 
           style={style}
-          onClick={() => this.switchNameHandler('Maximilian!!')}>Switch Name</button>
-        <Person 
-          name={this.state.persons[0].name} 
-          age={this.state.persons[0].age}></Person>
-        <Person
-          name={this.state.persons[1].name} 
-          age={this.state.persons[1].age}
-          click={this.switchNameHandler.bind(this,'Max!')}
-          changed={this.nameChangedHandler}>My Hobbies: Racing</Person>
-        <Person 
-          name={this.state.persons[2].name} 
-          age={this.state.persons[2].age}></Person>
+          onClick={this.togglePersonHandler} >Toggle Persons</button>
+          {persons}
       </div>
     );
    //JSX gets complied to React.createElement, takes at least 3 arguments, div, js object, multiple childeren
