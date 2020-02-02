@@ -1,21 +1,6 @@
 import React, { Component } from 'react';
-import styled from 'styled-components'
 import './App.css';
 import Person from './Person/Person';
-
-const StyledButton = styled.button`
-  background-color: ${props => props.myAlt ? 'green' : 'red'};
-  color: white;
-  font: inherit;
-  border: 1px solid black;
-  padding: 8px;
-  cursor: pointer;
-  
-  &:hover {
-    background-color: ${props => props.myAlt ?'lightgreen' : 'salmon'};
-    color: black;
-  }
-`
 
 class App extends Component {
   //state is keyword
@@ -60,13 +45,6 @@ class App extends Component {
     //expects key property if rendered through list
     if (this.state.showPersons) {
 
-      /*
-      style.backgroundColor="red";
-      style[":hover"]={
-        backgroundColor:'salmon',
-        color:'black'
-      }*/
-
       persons = (
         <div>
           {this.state.persons.map((person,index) =>{
@@ -99,11 +77,10 @@ class App extends Component {
         <h1>Hi, I'm a React App!</h1>
         <p className={classes.join(" ")}>This is really working!</p>
         {/*normal js is onclick, jsx is onClick. Don't add () for handlers*/}
-        <StyledButton 
-        myAlt={this.state.showPersons}
+        <button className="button"
         onClick={this.togglePersonHandler} >
           Toggle Persons
-          </StyledButton>
+          </button>
           {persons}
       </div>
     );
