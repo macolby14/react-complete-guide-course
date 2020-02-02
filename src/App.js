@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -41,10 +41,10 @@ class App extends Component {
   
   render() {
     let persons = null;
+    let btnClasses = "";
 
     //expects key property if rendered through list
     if (this.state.showPersons) {
-
       persons = (
         <div>
           {this.state.persons.map((person,index) =>{
@@ -57,14 +57,15 @@ class App extends Component {
           })}
         </div> 
       );
+      btnClasses=classes.Red;
     }
 
-    const classes = [];
+    const assignedClasses = [];
     if(this.state.persons.length <=2){
-      classes.push("red"); //red
+      assignedClasses.push(classes.red); //red
     }
     if(this.state.persons.length<=1){
-      classes.push("bold");//red and bold
+      assignedClasses.push(classes.bold);//red and bold
     }
 
     return (
@@ -73,11 +74,11 @@ class App extends Component {
       //jsx works in .js and jsx files. Convention to use .js
      //jsx restriction: className instead of class for css. class is reserved work in js
      //jsx must have 1 root element (in JSX 16, may return adjacent elements)
-    <div className="App">
+    <div className={classes.App}>
         <h1>Hi, I'm a React App!</h1>
-        <p className={classes.join(" ")}>This is really working!</p>
+        <p className={assignedClasses.join(" ")}>This is really working!</p>
         {/*normal js is onclick, jsx is onClick. Don't add () for handlers*/}
-        <button className="button"
+        <button className={btnClasses}
         onClick={this.togglePersonHandler} >
           Toggle Persons
           </button>
