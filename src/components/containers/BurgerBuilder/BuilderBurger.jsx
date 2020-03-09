@@ -69,9 +69,11 @@ class BurgerBuilder extends React.Component {
 
     return (
       <Aux>
-        <Modal show={this.state.purchasing}>
-          <OrderSummary ingredients={this.state.ingredients} />
-        </Modal>
+        {
+          <Modal show={this.state.purchasing}>
+            {<OrderSummary ingredients={this.state.ingredients} />}
+          </Modal>
+        }
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           ingredientAdded={this.addIngredientHandler}
