@@ -6,8 +6,11 @@ import Backdrop from "../Backdrop/Backdrop";
 
 class Modal extends React.Component {
   //prevent OrderSummary and Modal from updating when not displayed
-  shouldComponentUpdate(nextProps, netState) {
-    return nextProps.show !== this.props.show;
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      nextProps.show !== this.props.show ||
+      nextProps.children !== this.props.children
+    );
   }
 
   render() {
