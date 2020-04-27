@@ -26,7 +26,7 @@ class Checkout extends React.Component {
     };
     for (let [key, value] of query.entries()) {
       if (key === "price") {
-        price = key;
+        price = value;
       } else {
         newIngredients[key] = parseInt(value);
       }
