@@ -76,37 +76,9 @@ class BurgerBuilder extends React.Component {
     this.setState({ purchasing: false });
   };
 
-  // BEFORE react-router-dom
-  //  purchaseContinueHandler = () => {
-  //   this.setState({ loading: true });
-  //   const order = {
-  //     ingredients: this.state.ingredients,
-  //     price: this.state.totalPrice,
-  //     customer: {
-  //       name: "Mark Colby",
-  //       address: {
-  //         street: "Teststreet",
-  //         zipCode: "96734",
-  //         country: "USA"
-  //       },
-  //       email: "test@test.com"
-  //     },
-  //     deliveryMethod: "fastest"
-  //   };
-  //   axios
-  //     .post("/orders.json", order)
-  //     .then(response => {
-  //       this.setState({ loading: false, purchasing: false });
-  //     })
-  //     .catch(error => {
-  //       this.setState({ loading: false, purchasing: false });
-  //       console.log(error);
-  //     });
-  // };
-
   purchaseContinueHandler = () => {
     const queryParams = [];
-
+    queryParams.push("price=" + this.state.totalPrice);
     for (let ingred in this.state.ingredients) {
       queryParams.push(
         encodeURIComponent(ingred) +
@@ -114,10 +86,10 @@ class BurgerBuilder extends React.Component {
           encodeURIComponent(this.state.ingredients[ingred])
       );
     }
-
+    queryParams.push("price=" + this.state.totalPrice);
     const queryString = queryParams.join("&");
 
-    console.log("ingredients", this.state.ingredients);
+    //console.log("ingredients", this.state.ingredients);
     this.props.history.push({
       pathname: "/checkout",
       search: queryString,
