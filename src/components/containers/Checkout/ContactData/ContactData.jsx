@@ -9,32 +9,75 @@ import styles from "./ContactData.module.css";
 
 class ContactData extends React.Component {
   state = {
-    name: "",
-    email: "",
-    address: {
-      street: "",
-      postalCode: "",
+    orderForm: {
+      name: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Name",
+        },
+        value: "",
+      },
+      street: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Street",
+        },
+        value: "",
+      },
+      zipCode: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "ZIP Code",
+        },
+        value: "",
+      },
+      country: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Country",
+        },
+        value: "",
+      },
+      email: {
+        elementType: "input",
+        elementConfig: {
+          type: "email",
+          placeholder: "Email Address",
+        },
+        value: "",
+      },
+      deliveryMethod: {
+        elementType: "select",
+        elementConfig: {
+          options: [
+            { value: "fastest", displayValue: "Fastest", selected: true },
+            { value: "cheapest", displayValue: "Cheapest" },
+          ],
+        },
+        value: "cheapest",
+      },
     },
     loading: false,
   };
 
   orderHandler = (event) => {
-    event.preventDefault();
-    // BEFORE react-router-dom
+    event.preventDefault(); //prevent default for form. Don't request
     this.setState({ loading: true });
+    const formData = {};
+    for (let formElementIdentifier in this.state.orderForm) {
+      formData[formElementIdentifier] = this.state.orderForm[
+        formElementIdentifier
+      ];
+    }
+    console.log("formdata", formData);
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.price,
-      customer: {
-        name: "Mark Colby",
-        address: {
-          street: "Teststreet",
-          zipCode: "96734",
-          country: "USA",
-        },
-        email: "test@test.com",
-      },
-      deliveryMethod: "fastest",
+      orderData: formData,
     };
     axios
       .post("/orders.json", order)
@@ -48,34 +91,33 @@ class ContactData extends React.Component {
       });
   };
 
+  inputChangedHandler = (event, inputIdentifier) => {
+    const updatedOrderForm = { ...this.state.orderForm };
+    const updatedFormElement = { ...updatedOrderForm[inputIdentifier] };
+    updatedFormElement.value = event.target.value;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    this.setState({ orderForm: updatedOrderForm });
+  };
+
   render() {
+    const formElementsArr = [];
+    for (let key in this.state.orderForm) {
+      formElementsArr.push({ id: key, config: this.state.orderForm[key] });
+    }
+
     let form = (
-      <form action="">
-        <h4>Enter your Contact Data</h4>
-        <Input
-          inputtype="input"
-          type="text"
-          name="name"
-          placeholder="Your Name"
-        />
-        <Input
-          inputtype="input"
-          type="email"
-          name="email"
-          placeholder="Your Mail"
-        />
-        <Input
-          inputtype="input"
-          type="text"
-          name="street"
-          placeholder="Your Street"
-        />
-        <Input
-          inputtype="input"
-          type="text"
-          name="postal"
-          placeholder="Your Postal"
-        />
+      <form onSubmit={this.orderHandler}>
+        {formElementsArr.map((formElement) => (
+          <Input
+            key={formElement.id}
+            changed={(event) => {
+              this.inputChangedHandler(event, formElement.id);
+            }}
+            elementType={formElement.config.elementType}
+            elementConfig={formElement.config.elementConfig}
+            elementValue={formElement.config.value}
+          />
+        ))}
         <Button btnType="Success" clicked={this.orderHandler}>
           ORDER
         </Button>
