@@ -4,13 +4,19 @@ import styles from "./Input.module.css";
 
 const Input = (props) => {
   let inputElement = null;
+  const inputClasses = [styles.InputElement];
+
+  //add styles.Invalid only if it is false, not if it is null (before touched)
+  if (props.valid === false) {
+    inputClasses.push(styles.Invalid);
+  }
 
   switch (props.elementType) {
     case "input":
       inputElement = (
         <input
           onChange={props.changed}
-          className={styles.InputElement}
+          className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.elementValue}
         />

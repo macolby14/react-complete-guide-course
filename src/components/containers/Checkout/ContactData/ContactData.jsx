@@ -18,7 +18,7 @@ class ContactData extends React.Component {
         },
         value: "",
         validation: { required: true },
-        valid: false,
+        valid: null,
       },
       street: {
         elementType: "input",
@@ -28,7 +28,7 @@ class ContactData extends React.Component {
         },
         value: "",
         validation: { required: true },
-        valid: false,
+        valid: null,
       },
       zipCode: {
         elementType: "input",
@@ -38,7 +38,7 @@ class ContactData extends React.Component {
         },
         value: "",
         validation: { required: true, minLength: 5, maxLength: 5 },
-        valid: false,
+        valid: null,
       },
       country: {
         elementType: "input",
@@ -48,7 +48,7 @@ class ContactData extends React.Component {
         },
         value: "",
         validation: { required: true },
-        valid: false,
+        valid: null,
       },
       email: {
         elementType: "input",
@@ -58,7 +58,7 @@ class ContactData extends React.Component {
         },
         value: "",
         validation: { required: true },
-        valid: false,
+        valid: null,
       },
       deliveryMethod: {
         elementType: "select",
@@ -69,13 +69,14 @@ class ContactData extends React.Component {
           ],
         },
         value: "cheapest",
+        validation: {},
+        valid: null,
       },
     },
     loading: false,
   };
 
   checkValidity(value, rules) {
-    x;
     if (rules.required) {
       if (value.trim() === "") {
         return false;
@@ -152,6 +153,7 @@ class ContactData extends React.Component {
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
             elementValue={formElement.config.value}
+            valid={formElement.config.valid}
           />
         ))}
         <Button btnType="Success" clicked={this.orderHandler}>
