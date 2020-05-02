@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import Aux from "../../../hoc/Aux";
 import Burger from "../../Burger/Burger";
@@ -8,6 +9,7 @@ import OrderSummary from "../../Burger/OrderSummary/OrderSummary";
 import axios from "../../../axios-orders";
 import Spinner from "../../UI/Spinner/Spinner";
 import WithErrorHandler from "../../../hoc/WithErrorHandler/WithErrorHandler";
+import * as actions from "../../../store/actions";
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -151,4 +153,22 @@ class BurgerBuilder extends React.Component {
   }
 }
 
-export default WithErrorHandler(BurgerBuilder, axios);
+const mapPropsToState = (state) => {
+  return {
+    ingredients: state.ingredients,
+    price: state.price,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addIngredient: () => {
+      return dispatch({ type: actions.ADD_INGREDIENT });
+    },
+  };
+};
+
+export default WithErrorHandler(
+  connect(mapPropsToState, mapDispatchToProps)(BurgerBuilder),
+  axios
+);
