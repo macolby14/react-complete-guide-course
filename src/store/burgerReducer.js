@@ -14,7 +14,6 @@ const INGREDIENT_PRICES = {
 };
 
 const burgerReducer = (state = initialState, action) => {
-  console.log("[reducer.js] in reducer method", action);
   switch (action.type) {
     case actionsList.ADD_INGREDIENT:
       return addIngredientHandler(state, action.newIngredType);
