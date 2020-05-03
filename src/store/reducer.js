@@ -1,4 +1,4 @@
-import * as actions from "./actions";
+import * as actionTypes from "./actions";
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -7,31 +7,34 @@ const INGREDIENT_PRICES = {
   bacon: 0.7,
 };
 
-const initialState = { ingredients: null, price: 4 };
+const initialState = {
+  ingredients: { salad: 0, cheese: 0, meat: 0, bacon: 0 },
+  totalPrice: 4,
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.ADD_INGREDIENT:
-      return state;
+    case actionTypes.ADD_INGREDIENT:
+      return {
+        ...state,
+        ingredients: {
+          ...state.ingredients,
+          [action.ingredientName]: state.ingredients[action.ingredientName] + 1,
+        },
+        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+      };
+    case actionTypes.REMOVE_INGREDIENT:
+      return {
+        ...state,
+        ingredients: {
+          ...state.ingredients,
+          [action.ingredientName]: state.ingredients[action.ingredientName] - 1,
+        },
+        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+      };
     default:
       return state;
   }
-};
-
-const addIngredientHandler = (state, type) => {
-  const oldCount = state.ingredients[type];
-  const updatedCount = oldCount + 1;
-  const updatedIngredients = { ...state.ingredients };
-  updatedIngredients[type] = updatedCount;
-  const priceAddition = INGREDIENT_PRICES[type];
-  const oldPrice = state.price;
-  const newPrice = oldPrice + priceAddition;
-  return {
-    ...state,
-    ingredients: updatedIngredients,
-    price: newPrice,
-  };
-  this.updatePurchaseState(updatedIngredients);
 };
 
 export default reducer;
