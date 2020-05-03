@@ -13,7 +13,7 @@ const INGREDIENT_PRICES = {
   bacon: 0.7,
 };
 
-const reducer = (state = initialState, action) => {
+const burgerReducer = (state = initialState, action) => {
   console.log("[reducer.js] in reducer method", action);
   switch (action.type) {
     case actionsList.ADD_INGREDIENT:
@@ -67,4 +67,4 @@ const updatePurchaseState = (state) => {
   };
 };
 
-export default reducer;
+export default burgerReducer;

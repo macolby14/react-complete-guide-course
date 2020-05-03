@@ -1,15 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
-import { createStore } from "redux";
+import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 
 import "./index.css";
 import App from "./App";
-import reducer from "./store/reducer";
 import * as serviceWorker from "./serviceWorker";
+import contactReducer from "./store/contactReducer";
+import burgerReducer from "./store/burgerReducer";
 
-const store = createStore(reducer);
+const overallReducer = combineReducers({
+  burger: burgerReducer,
+  contact: contactReducer,
+});
+
+const store = createStore(overallReducer);
 
 const app = (
   <Provider store={store}>
