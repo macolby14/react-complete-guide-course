@@ -126,7 +126,6 @@ class ContactData extends React.Component {
         formElementIdentifier
       ];
     }
-    console.log("formdata", formData);
     const order = {
       ingredients: this.props.ings,
       price: this.props.price,
