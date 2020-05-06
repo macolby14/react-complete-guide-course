@@ -91,11 +91,11 @@ class BurgerBuilder extends React.Component {
   }
 }
 
-const mapPropsToState = (state) => {
+const mapStatetoProps = (state) => {
   return {
-    ings: state.ingredients,
-    price: state.totalPrice,
-    error: state.error,
+    ings: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
+    error: state.burgerBuilder.error,
   };
 };
 
@@ -114,6 +114,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(
-  mapPropsToState,
+  mapStatetoProps,
   mapDispatchToProps
 )(WithErrorHandler(BurgerBuilder, axios));
