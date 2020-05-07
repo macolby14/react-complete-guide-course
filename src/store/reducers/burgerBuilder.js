@@ -8,6 +8,13 @@ const INGREDIENT_PRICES = {
   bacon: 0.7,
 };
 
+const initialState = {
+  ingredients: null,
+  totalPrice: 4,
+  error: false,
+  building: false,
+};
+
 const addIngredient = (state, action) => {
   const updateIngredient = {
     [action.ingredientName]: state.ingredients[action.ingredientName] + 1,
@@ -16,6 +23,7 @@ const addIngredient = (state, action) => {
   const updatedState = {
     ingredients: updatedIngredients,
     totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+    building: true,
   };
   return updateObject(state, updatedState);
 };
@@ -28,6 +36,7 @@ const removeIngredient = (state, action) => {
   const updatedState = {
     ingredients: updatedIngredients,
     totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+    building: true,
   };
   return updateObject(state, updatedState);
 };
@@ -42,13 +51,8 @@ const setIngredients = (state, action) => {
     },
     totalPrice: initialState.totalPrice,
     error: false,
+    building: false,
   });
-};
-
-const initialState = {
-  ingredients: null,
-  totalPrice: 4,
-  error: false,
 };
 
 const reducer = (state = initialState, action) => {

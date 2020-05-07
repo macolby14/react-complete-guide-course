@@ -7,16 +7,16 @@ const controls = [
   { label: "Salad", type: "salad" },
   { label: "Bacon", type: "bacon" },
   { label: "Cheese", type: "cheese" },
-  { label: "Meat", type: "meat" }
+  { label: "Meat", type: "meat" },
 ];
 
-const BuildControls = props => {
+const BuildControls = (props) => {
   return (
     <div className={styles.BuildControls}>
       <p>
         Current Price: <strong>${props.price.toFixed(2)}</strong>
       </p>
-      {controls.map(ctrl => {
+      {controls.map((ctrl) => {
         return (
           <BuildControl
             key={ctrl.label}
@@ -36,7 +36,7 @@ const BuildControls = props => {
         disabled={!props.purchasable}
         onClick={props.ordered}
       >
-        ORDER NOW
+        {props.isAuthenticated ? "ORDER NOW" : "SIGN UP TO ORDER"}
       </button>
     </div>
   );
