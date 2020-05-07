@@ -12,7 +12,6 @@ import * as actions from "./store/actions/index";
 
 class App extends React.Component {
   componentDidMount() {
-    console.log("App Mounted");
     this.props.onTryAutoSignup();
   }
 
@@ -53,7 +52,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onTryAutoSignup: () => {
-      console.log("Dispatching authCheckState");
       dispatch(actions.authCheckState());
     },
   };

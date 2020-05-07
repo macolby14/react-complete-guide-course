@@ -82,17 +82,13 @@ export const setAuthRedirectPath = (path) => {
 };
 
 export const authCheckState = () => {
-  console.log("In authCheckState");
   return (dispatch) => {
     const token = localStorage.getItem("token");
-    console.log("token is", token);
     if (!token) {
-      console.log("Logging otu due to token");
       dispatch(logout());
     } else {
       const expirationDate = new Date(localStorage.getItem("expirationDate"));
       if (expirationDate < new Date()) {
-        console.log("Logging out due to expiration date");
         dispatch(logout());
       } else {
         const userId = localStorage.getItem("userId");
