@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import Aux from "../../../hoc/Aux";
 import styles from "./Layout.module.css";
@@ -13,7 +14,7 @@ class Layout extends React.Component {
   };
 
   toggleSidebarHandler = () => {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return { showSideDrawer: !prevState.showSideDrawer };
     });
   };
@@ -21,10 +22,14 @@ class Layout extends React.Component {
   render() {
     return (
       <Aux>
-        <Toolbar toggleSidebar={this.toggleSidebarHandler} />
+        <Toolbar
+          toggleSidebar={this.toggleSidebarHandler}
+          isAuthenticated={this.props.isAuthenticated}
+        />
         <SideDrawer
           open={this.state.showSideDrawer}
           closed={this.sideDrawerClosedHandler}
+          isAuthenticated={this.props.isAuthenticated}
         />
         <main className={styles.content}>{this.props.children}</main>
       </Aux>
@@ -32,4 +37,10 @@ class Layout extends React.Component {
   }
 }
 
-export default Layout;
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.token !== null,
+  };
+};
+
+export default connect(mapStateToProps)(Layout);
