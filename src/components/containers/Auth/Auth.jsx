@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import Input from "../../../components/UI/Input/Input";
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
-import { updateObject } from "../../../shared/utility";
+import { updateObject, checkValidity } from "../../../shared/utility";
 import styles from "./Auth.module.css";
 import * as actions from "../../../store/actions/index";
 import { SET_AUTH_REDIRECT_PATH } from "../../../store/actions/actionTypes";
@@ -44,46 +44,11 @@ class Auth extends React.Component {
     }
   }
 
-  checkValidity(value, rules) {
-    if (rules.required) {
-      if (value.trim() === "") {
-        return false;
-      }
-    }
-
-    if (rules.minLength) {
-      if (value.length < rules.minLength) {
-        return false;
-      }
-    }
-
-    if (rules.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=`{|}~-]+(?:\.[a-z0-9])/;
-      if (!pattern.test(value)) {
-        return false;
-      }
-    }
-
-    if (rules.isNumeric) {
-      const pattern = /^\d$/;
-      if (!pattern.test(value)) {
-        return false;
-      }
-    }
-
-    if (rules.maxLength) {
-      if (value.length > rules.maxLength) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   inputChangedHandler = (event, inputIdentifier) => {
     const updatedControls = updateObject(this.state.controls, {
       [inputIdentifier]: updateObject(this.state.controls[inputIdentifier], {
         value: event.target.value,
-        valid: this.checkValidity(
+        valid: checkValidity(
           event.target.value,
           this.state.controls[inputIdentifier].validation
         ),

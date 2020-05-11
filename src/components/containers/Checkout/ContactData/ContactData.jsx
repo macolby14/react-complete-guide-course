@@ -7,7 +7,7 @@ import Button from "../../../UI/Button/Button";
 import Input from "../../../UI/Input/Input";
 import withErrorHandler from "../../../../hoc/WithErrorHandler/WithErrorHandler";
 
-import { updateObject } from "../../../../shared/utility";
+import { updateObject, checkValidity } from "../../../../shared/utility";
 import styles from "./ContactData.module.css";
 import * as actions from "../../../../store/actions/index";
 
@@ -80,31 +80,10 @@ class ContactData extends React.Component {
     formIsValid: false,
   };
 
-  checkValidity(value, rules) {
-    if (rules.required) {
-      if (value.trim() === "") {
-        return false;
-      }
-    }
-
-    if (rules.minLength) {
-      if (value.length < rules.minLength) {
-        return false;
-      }
-    }
-
-    if (rules.maxLength) {
-      if (value.length > rules.maxLength) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   inputChangedHandler = (event, inputIdentifier) => {
     const updatedFormElement = updateObject(this.state.orderForm, {
       value: event.target.value,
-      valid: this.checkValidity(
+      valid: checkValidity(
         event.target.value,
         this.state.orderForm[inputIdentifier].validation
       ),
