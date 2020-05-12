@@ -22,7 +22,7 @@ export const setIngredients = (ingredients) => {
 export const initIngredients = () => {
   return (dispatch) => {
     axios
-      .get("https://react-my-burger-3f9fd.firebaseio.com/ingredients.json")
+      .get("https://mark-reactburger.firebaseio.com/ingredients.json")
       .then((response) => {
         dispatch(setIngredients(response.data));
       })
