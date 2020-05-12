@@ -1,4 +1,3 @@
-
 Burger Building App
 
 Deployed to https://mark-reactburger.web.app/ using Firebase hosting.
