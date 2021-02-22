@@ -1,7 +1,22 @@
-Burger Building App
+# Burger Building App - Restaurant Order Page with React
 
-Deployed to https://mark-reactburger.web.app/ using Firebase hosting.
+## https://mark-reactburger.web.app/
 
-Single Page Web App utilizing React, Redux, Axios, Jest, Enzyme. Hosted on Firebase and utilizes Firebase real time database.
+### Technologies:
+* React
+* Javacript
+* Testing with Jest and Enzyme
+* Redux
+* HTML & CSS
+* Firebase (authentication and data persistence)
 
-Built while taking the course React- The Complete Guide by Maximilian Schwarzmüller.
+### A web app that allows users to create custom burgers to orders. Integration with Firebase allows User's to login to see their order history and allows the owner to see all orders. Built as part of an online React course taught by Maximilian Schwarzmüller
+
+### Screenshots:
+#### Home Page
+![Homepage Screenshot](/screenshots/homepage.jpg?raw=true)
+#### Login Page
+![Login Screenshot](/screenshots/login.jpg?raw=true)
+
+#### Orders Page
+![Orders Screenshot](/screenshots/orders.jpg?raw=true)
